@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cv-rtsp-pipeline
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cv-rtsp-pipeline
+  template:
+    metadata:
+      labels:
+        app: cv-rtsp-pipeline
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/eltrovert/cv-rtsp-pipeline:dev
+          env:
+            - name: RTSP_URL
+              value: "rtsp://user:pass@camera:554/stream"
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
